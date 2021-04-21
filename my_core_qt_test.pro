@@ -9,7 +9,9 @@ CONFIG -= app_bundle
 
 SOURCES += \
         main.cpp \
-        mytimertest.cpp
+        mytimertest.cpp \
+        MyThreadTest1.cpp \
+        MyThreadTest2.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -17,4 +19,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    mytimertest.h
+    mytimertest.h \
+    MyThreadTest1.h \
+    MyThreadTest2.h

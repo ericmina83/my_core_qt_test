@@ -51,10 +51,18 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = main.cpp \
-		mytimertest.cpp moc_mytimertest.cpp
+		mytimertest.cpp \
+		MyThreadTest1.cpp \
+		MyThreadTest2.cpp moc_mytimertest.cpp \
+		moc_MyThreadTest1.cpp \
+		moc_MyThreadTest2.cpp
 OBJECTS       = main.o \
 		mytimertest.o \
-		moc_mytimertest.o
+		MyThreadTest1.o \
+		MyThreadTest2.o \
+		moc_mytimertest.o \
+		moc_MyThreadTest1.o \
+		moc_MyThreadTest2.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/unix.conf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/common/linux.conf \
@@ -126,8 +134,12 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		my_core_qt_test.pro mytimertest.h main.cpp \
-		mytimertest.cpp
+		my_core_qt_test.pro mytimertest.h \
+		MyThreadTest1.h \
+		MyThreadTest2.h main.cpp \
+		mytimertest.cpp \
+		MyThreadTest1.cpp \
+		MyThreadTest2.cpp
 QMAKE_TARGET  = my_core_qt_test
 DESTDIR       = 
 TARGET        = my_core_qt_test
@@ -301,8 +313,8 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mytimertest.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mytimertest.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mytimertest.h MyThreadTest1.h MyThreadTest2.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mytimertest.cpp MyThreadTest1.cpp MyThreadTest2.cpp $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -334,13 +346,23 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -std=gnu++11 -Wall -W -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mytimertest.cpp
+compiler_moc_header_make_all: moc_mytimertest.cpp moc_MyThreadTest1.cpp moc_MyThreadTest2.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mytimertest.cpp
+	-$(DEL_FILE) moc_mytimertest.cpp moc_MyThreadTest1.cpp moc_MyThreadTest2.cpp
 moc_mytimertest.cpp: mytimertest.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jyunanzou/workspace/my_core_qt_test -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include mytimertest.h -o moc_mytimertest.cpp
+
+moc_MyThreadTest1.cpp: MyThreadTest1.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jyunanzou/workspace/my_core_qt_test -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include MyThreadTest1.h -o moc_MyThreadTest1.cpp
+
+moc_MyThreadTest2.cpp: MyThreadTest2.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/jyunanzou/workspace/my_core_qt_test -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/7 -I/usr/include/x86_64-linux-gnu/c++/7 -I/usr/include/c++/7/backward -I/usr/lib/gcc/x86_64-linux-gnu/7/include -I/usr/local/include -I/usr/lib/gcc/x86_64-linux-gnu/7/include-fixed -I/usr/include/x86_64-linux-gnu -I/usr/include MyThreadTest2.h -o moc_MyThreadTest2.cpp
 
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
@@ -354,14 +376,28 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean
 
 ####### Compile
 
-main.o: main.cpp mytimertest.h
+main.o: main.cpp mytimertest.h \
+		MyThreadTest1.h \
+		MyThreadTest2.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mytimertest.o: mytimertest.cpp mytimertest.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mytimertest.o mytimertest.cpp
 
+MyThreadTest1.o: MyThreadTest1.cpp MyThreadTest1.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyThreadTest1.o MyThreadTest1.cpp
+
+MyThreadTest2.o: MyThreadTest2.cpp MyThreadTest2.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o MyThreadTest2.o MyThreadTest2.cpp
+
 moc_mytimertest.o: moc_mytimertest.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mytimertest.o moc_mytimertest.cpp
+
+moc_MyThreadTest1.o: moc_MyThreadTest1.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MyThreadTest1.o moc_MyThreadTest1.cpp
+
+moc_MyThreadTest2.o: moc_MyThreadTest2.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_MyThreadTest2.o moc_MyThreadTest2.cpp
 
 ####### Install
 

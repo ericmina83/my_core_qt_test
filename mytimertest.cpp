@@ -2,6 +2,7 @@
 
 #include <QDebug>
 #include <iostream>
+#include <QThread>
 
 MyTimerTest::MyTimerTest(QObject *parent) : QObject(parent)
 {
@@ -13,9 +14,9 @@ MyTimerTest::MyTimerTest(QObject *parent) : QObject(parent)
 void MyTimerTest::handleTimer()
 {
     static int i = 0;
-    qDebug() << "haha: " << i++;
+    qDebug() << "MyTimerTest" << i++ << "thread id:" << QThread::currentThreadId();
 
-    std::string haha;
-    std::cin >> haha;
-    std::cout << haha << std::endl;
+    // std::string haha;
+    // std::cin >> haha;
+    // std::cout << haha << std::endl;
 }
